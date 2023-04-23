@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predict Diabetes</title>
+</head>
+<body>
+    Glucose : <input type="number" id="glucose" required/><br>
+    BMI : <input type="number" id="bmi" required/><br>
+    Age : <input type="number" id="age" required/><br>
+    BP : <input type="number" id="bp" required/><br>
+    Insulin : <input type="number" id="insulin" required/><br>
+    Diabetes pdf : <input type="number" id="dpdf" required/><br>
+    <button type="button" onclick="getPredicition()">get</button>
+    <br><br><br><br>
+    <div id="result"></div>
+    <script>
+        const glucose = document.getElementById('glucose');
+        const bmi = document.getElementById('bmi');
+        const age = document.getElementById('age');
+        const bp = document.getElementById('bp');
+        const insulin = document.getElementById('insulin');
+        const dpdf = document.getElementById('dpdf');
+
+        function getPredicition(){
+            document.getElementById('result').innerHTML="loading ...";
+            var str = "/result?glucose="+glucose.value;
+            str+="&bmi="+bmi.value+"&age="+age.value+"&bp="+bp.value;
+            str+="&insulin="+insulin.value+"&dpdf="+dpdf.value;
+            fetch(str)
+            .then(res => res.json())
+            .then((data)=>{
+                if(data[1]==1){
+                    document.getElementById('result').innerHTML="Positive";
+                }else{
+                    document.getElementById('result').innerHTML="Negative";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
